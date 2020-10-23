@@ -2,6 +2,16 @@
 
 This Repository is a guide to all the git commands you need to use in case any of these situations arise
 
+## Index :books:
+* [Basic Commands :v:](#basic-commands-v)
+* [Branches :deciduous_tree:](#branches-deciduous_tree)
+* [Update forked Repository with original Repository :hourglass:](#update-forked-repository-with-original-repository--hourglass)
+* [Dev branch is X commits behind and Y commits ahead of master](#your-dev-branch-is-x-commits-behind-and-y-commits-ahead-of-master-fix)
+* [Short hands](#short-hands)
+* [GitHub CLI commands](#github--cli-commands)
+
+
+
 ## Basic Commands :v:
 
 - Clone a Repository
@@ -38,6 +48,11 @@ git clone https://github.com/CodeChefVIT/git-cheatsheet.git
   git commit -m “[descriptive message]”
     commit your staged content as a new commit snapshot
   
+```
+
+- Change most recent Git commit message
+```sh
+git commit --amend
 ```
 
 - Check where is your Repository remote 
@@ -108,6 +123,10 @@ Add the filename/directory you want to ignore by the git in the gitignore file
 now, when you add the files it ignores node_modules directory in your project.
 
 
+<a name="branches"/>
+
+
+**[⬆ Back to Index](#index-books)**
 
 
 ## Branches :deciduous_tree:	
@@ -140,37 +159,47 @@ now, when you add the files it ignores node_modules directory in your project.
 
 ```
 
+**[⬆ Back to Index](#index-books)**
+
+
 ## Update forked Repository with original Repository  :hourglass:	
 
   These steps are to be followed when your forked repository is few commits behind original repository
 
-```sh
+  1. Check if you have the forked repository added to your remotes.
+  ```
+  git remote -v
+  ```
+  If you see the forked repository listed in your remotes you can skip to point 3.
 
-  - Add original repository url here 
+  2. Add the forked repository as a remote
+  ```
+  git remote add upstream https://github.com/whoever/whatever.git
+  ```
+  3. Fetch changes from forked repository
+  ```
+  git fetch upstream
+  ```
+  Any new changes and branches from the original forked repository should now be fetched to your local repository.
+  
+  4. Rebase your local branch, or merge the changes
+  
+  You can now choose to either rebase your local branch, or merge the changes from the forked repository into your branch. If you are unsure about which option to pick, you can read more about [the differences between rebasing and merging in this article](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
 
-    git remote add upstream https://github.com/whoever/whatever.git
 
-  - Fetch all branches of the repository
+  Use the following if you want to rebase your branch:
+  ```
+  git rebase upstream/master
+  ```
 
-    git fetch upstream
+  Or use the merge command if you want to merge instead:
+  ```
+  git merge upstream/master
+  ```
+  
+  Replace "master" with the name of the branch on the forked repository that you want to rebase or merge with.
 
-  - Make sure you are on master branch
-
-    git checkout master
-
-  -  Rewrite your master branch so that any commits of yours that aren not already in upstream/master are replayed on top of that other branch
-
-    git rebase upstream/master
-
-    This should update your forked repository with original repository
-
-    However if you do not want to rewrite history of master branch then replace last command with this
-
-    git merge upstream/master
-    
- 
-
-```
+**[⬆ Back to Index](#index-books)**
 
 ## Your dev branch is X commits behind and Y commits ahead of master fix 
 
@@ -201,6 +230,9 @@ now, when you add the files it ignores node_modules directory in your project.
 
 
 ```
+
+**[⬆ Back to Index](#index-books)**
+
 ## Short hands 
 
 ```sh
@@ -225,3 +257,75 @@ now, when you add the files it ignores node_modules directory in your project.
       above helps to writes/pipes the differences into specified file (difference.txt) and you can track the changes
       easily
 ```
+
+**[⬆ Back to Index](#index-books)**
+
+
+## GitHub  CLI commands:
+```sh
+List Issues With GitHub CLI
+1. gh issue list
+list out the open GitHub Issues for our project
+
+2. gh issue list --state "all"
+  gh issue list -s "all"
+If we want to list out ALL of the issues we could use the “state” flag
+
+3. gh issue list --assignee "n8ebel"
+Now, maybe we’ve realized that is too many issues to sort through, so we decide we only want to list out your currently assigned issues.
+
+4. gh issue status
+Next, we want to check in on the status of a couple of the issues we created yesterday.  Maybe we don’t remember their exact numbers, but since we created them, we can use the status command to list them at the terminal
+
+5. gh issue list --state "closed"
+   gh issue list -s "closed"
+After checking in on these issues, we still can’t find the issue we’re looking for, so we might want to check whether it was closed or not.
+
+6. gh issue list --label "bug"
+   gh issue list -l "bug"
+To list out all of our open bugs, we could filter by the “bug” label defined in our GitHub repo
+
+7. gh issue view "15"
+Once we’ve found an issue we want to fix, we might want to assign that issue to ourselves.  Currently, we can’t do that directly from the command line, but we can quickly open the issue from the command line using the “view” command.
+
+8. gh issue create
+We can use the gh issue create command to create a new GitHub Issue directly from the command line.
+
+9.  gh issue create -t "Sample Issue Title" -b "Sample issue description"
+If you’d like to simplify things a bit, you can specify the issue with the command using additional flags
+
+10. gh pr list
+list the open pull requests for our project.
+
+11. gh pr list --state "all"
+    gh pr list -s "all"
+If we want to list out ALL of the pull requests, both open and closed, we could use the “state” flag
+
+12. gh pr status
+Next, we want to check in on the status of a couple of the PRs we created yesterday.  Maybe we don’t remember their exact numbers, but since we created them, we can use the status command to list them at the terminal
+
+13. gh pr list --state "closed"
+    gh pr list -s "closed"
+After checking in on these PRs, we still can’t find the pull request we’re looking for, so we might want to check whether it was closed or not.
+
+14. gh pr view "14"
+Once we’ve found a PR we want to review, we might want to assign that PR to ourself.  Currently, we can’t do that directly from the command line, but we can quickly open the PR from the command line using the view command.
+
+15. gh pr checkout
+Check out pull requests locally.
+
+16. gh pr create
+Create a new pull request.
+
+17. gh pr checks
+View your pull requests’ checks.
+
+18. gh release create
+Create a new release
+
+19. gh alias set
+Create a shortcut for a gh command.
+```
+
+**[⬆ Back to Index](#index-books)**
+
